@@ -2,7 +2,7 @@
 AI Study Buddy – AI-Powered Learning Assistant
 
 2. Your Name & Roll Number:
-[Your Girlfriend’s Name] – [Her Roll Number]
+Ishita Singh – 2024-B-14042006B
 
 3. Problem Statement:
 Students often struggle to revise and retain large amounts of study material. Manually creating summaries, quizzes, and flashcards is time-consuming and inefficient. There’s a need for a tool that automates this process, making learning faster and more engaging.
