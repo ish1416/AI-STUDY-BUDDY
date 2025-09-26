@@ -3,12 +3,13 @@ import { View, Text, StyleSheet } from 'react-native';
 export default function NotesScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Saved Notes</Text>
+      <Text style={styles.title}>Saved Notes</Text>
+      <Text>No notes yet. Scan to add some!</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  text: { fontSize: 18 }
+  title: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 }
 });
