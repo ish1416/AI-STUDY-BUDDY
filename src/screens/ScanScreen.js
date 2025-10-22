@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import Tesseract from 'tesseract.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
 
 export default function ScanScreen() {
@@ -9,7 +10,6 @@ export default function ScanScreen() {
   const [extractedText, setExtractedText] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Pick image from gallery
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -24,7 +24,6 @@ export default function ScanScreen() {
     }
   };
 
-  // Run OCR using Tesseract.js
   const runOCR = async (uri) => {
     try {
       setLoading(true);
@@ -40,6 +39,30 @@ export default function ScanScreen() {
     }
   };
 
+  const saveNote = async () => {
+    if (!extractedText) {
+      Alert.alert('No Text', 'Please extract text first');
+      return;
+    }
+
+    try {
+      const existingNotes = await AsyncStorage.getItem('notes');
+      const notes = existingNotes ? JSON.parse(existingNotes) : [];
+      const newNote = {
+        id: Date.now(),
+        text: extractedText,
+        date: new Date().toLocaleString(),
+      };
+      notes.push(newNote);
+      await AsyncStorage.setItem('notes', JSON.stringify(notes));
+      Alert.alert('Success', 'Note saved successfully!');
+      setExtractedText('');
+      setImage(null);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.title}>Scan Notes</Text>
@@ -47,14 +70,11 @@ export default function ScanScreen() {
       <CustomButton title="Upload Image" onPress={pickImage} />
 
       {image && <Image source={{ uri: image }} style={styles.image} />}
-
       {loading && <ActivityIndicator size="large" color="#6200EE" style={{ margin: 20 }} />}
 
-      {extractedText ? (
-        <Text style={styles.result}>{extractedText}</Text>
-      ) : (
-        <Text style={{ marginTop: 20 }}>No text extracted yet.</Text>
-      )}
+      {extractedText ? <Text style={styles.result}>{extractedText}</Text> : null}
+
+      <CustomButton title="Save Note" onPress={saveNote} />
     </ScrollView>
   );
 }
@@ -65,6 +85,3 @@ const styles = StyleSheet.create({
   image: { width: 250, height: 250, marginVertical: 20, borderRadius: 10 },
   result: { marginTop: 20, fontSize: 16, color: '#333' },
 });
-
-
-  
