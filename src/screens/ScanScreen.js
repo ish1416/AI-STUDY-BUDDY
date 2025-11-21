@@ -15,7 +15,7 @@ export default function ScanScreen() {
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaType.Images,
       allowsEditing: false,
       quality: 0.8,
     });
@@ -36,7 +36,7 @@ export default function ScanScreen() {
     }
 
     let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaType.Images,
       allowsEditing: false,
       quality: 0.8,
     });
@@ -76,13 +76,19 @@ export default function ScanScreen() {
 
     try {
       setSummarizing(true);
+      console.log('Generating summary for text:', extractedText.substring(0, 100) + '...');
       const summaryText = await summarizeText(extractedText);
       setSummary(summaryText);
+      console.log('Summary generated successfully');
     } catch (error) {
-      Alert.alert('Error', 'Failed to generate summary. Using fallback method.');
-      // Fallback summary generation
-      const sentences = extractedText.split('.').slice(0, 3);
-      setSummary(sentences.join('.') + '.');
+      console.error('Summary generation failed:', error);
+      Alert.alert('AI Error', `Failed to generate AI summary: ${error.message}. Using fallback method.`);
+      
+      // Better fallback summary generation
+      const sentences = extractedText.split(/[.!?]+/).filter(s => s.trim().length > 10);
+      const summaryLength = Math.min(3, sentences.length);
+      const fallbackSummary = sentences.slice(0, summaryLength).join('. ').trim() + '.';
+      setSummary(`[Fallback Summary] ${fallbackSummary}`);
     } finally {
       setSummarizing(false);
     }

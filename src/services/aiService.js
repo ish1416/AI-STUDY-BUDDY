@@ -7,6 +7,7 @@ export const summarizeText = async (text) => {
       throw new Error('Text too short for summarization');
     }
 
+    console.log('Calling Hugging Face API...');
     const response = await fetch(HUGGING_FACE_API_URL, {
       method: 'POST',
       headers: {
@@ -23,17 +24,26 @@ export const summarizeText = async (text) => {
       }),
     });
 
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status}`);
-    }
-
+    console.log('API Response status:', response.status);
     const result = await response.json();
+    console.log('API Response:', result);
+
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status} - ${result.error || 'Unknown error'}`);
+    }
     
     if (result.error) {
       throw new Error(result.error);
     }
 
-    return result[0]?.summary_text || 'Summary not available';
+    // Handle different response formats
+    if (Array.isArray(result) && result[0]?.summary_text) {
+      return result[0].summary_text;
+    } else if (result.summary_text) {
+      return result.summary_text;
+    } else {
+      throw new Error('Invalid API response format');
+    }
   } catch (error) {
     console.error('Summarization error:', error);
     throw error;
