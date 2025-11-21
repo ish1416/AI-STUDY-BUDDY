@@ -1,14 +1,10 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, Alert, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-
-// Debug: Check what's available in ImagePicker
-console.log('ImagePicker MediaType:', ImagePicker.MediaType);
-console.log('ImagePicker MediaTypeOptions:', ImagePicker.MediaTypeOptions);
-console.log('Available ImagePicker properties:', Object.keys(ImagePicker));
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
 import { summarizeText } from '../services/aiService';
+import { extractTextFromImage } from '../services/ocrService';
 
 export default function ScanScreen() {
   const [image, setImage] = useState(null);
@@ -76,16 +72,21 @@ export default function ScanScreen() {
     }
   };
 
-  const processImage = () => {
+  const processImage = async () => {
     setShowImageOptions(false);
     setLoading(true);
     
-    // Simulate OCR processing (since Tesseract doesn't work in React Native)
-    setTimeout(() => {
-      const sampleText = "This is sample extracted text from your image. In a real implementation, this would be the actual text extracted from the image using a proper OCR service. You can edit this text below if needed.";
-      setExtractedText(sampleText);
+    try {
+      console.log('Processing image for OCR...');
+      const extractedText = await extractTextFromImage(image);
+      setExtractedText(extractedText);
+      console.log('Text extracted successfully:', extractedText.substring(0, 100) + '...');
+    } catch (error) {
+      console.error('OCR processing failed:', error);
+      setExtractedText('Failed to extract text from image. Please try another image or edit this text manually.');
+    } finally {
       setLoading(false);
-    }, 2000);
+    }
   };
 
   const chooseAnotherImage = () => {
@@ -161,7 +162,7 @@ export default function ScanScreen() {
             console.log('Select Gallery button pressed');
             pickImage();
           }} />
-          <CustomButton title="🧪 Test Button" onPress={() => Alert.alert('Test', 'Button works!')} />
+
         </>
       )}
 
