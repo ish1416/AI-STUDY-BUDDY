@@ -1,5 +1,4 @@
-const HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn';
-const API_KEY = 'hf_your_api_key_here'; // Replace with your actual API key
+import { HUGGING_FACE_API_KEY, HUGGING_FACE_API_URL } from '@env';
 
 export const summarizeText = async (text) => {
   try {
@@ -11,7 +10,7 @@ export const summarizeText = async (text) => {
     const response = await fetch(HUGGING_FACE_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${API_KEY}`,
+        'Authorization': `Bearer ${HUGGING_FACE_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({

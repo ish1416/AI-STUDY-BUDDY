@@ -10,16 +10,18 @@ export default function CustomButton({ title, onPress }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#6200EE',
-    paddingVertical: 12,
+    backgroundColor: '#000',
+    paddingVertical: 15,
     paddingHorizontal: 20,
-    borderRadius: 8,
-    marginVertical: 10,
-    alignItems: 'center'
+    borderRadius: 0,
+    marginVertical: 8,
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#000'
   },
   text: {
     color: '#fff',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'normal'
   }
 });

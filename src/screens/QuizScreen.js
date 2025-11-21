@@ -186,53 +186,58 @@ export default function QuizScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flexGrow: 1, padding: 20, alignItems: 'center' },
-  centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 10, color: '#6200EE' },
-  subtitle: { fontSize: 16, color: 'gray', marginBottom: 20 },
-  loadingText: { fontSize: 18, color: '#6200EE' },
+  container: { flexGrow: 1, padding: 20, backgroundColor: '#fff' },
+  centerContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#fff' },
+  title: { fontSize: 24, fontWeight: 'normal', marginBottom: 20, color: '#000' },
+  subtitle: { fontSize: 16, color: '#666', marginBottom: 20 },
+  loadingText: { fontSize: 18, color: '#000' },
   noteCard: {
-    backgroundColor: '#f0f0f0',
-    padding: 15,
-    borderRadius: 10,
-    marginVertical: 8,
+    backgroundColor: '#f9f9f9',
+    padding: 20,
+    borderRadius: 0,
+    marginVertical: 10,
     width: '100%',
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  noteDate: { fontSize: 12, color: 'gray', marginBottom: 5 },
-  notePreview: { fontSize: 14, color: '#333', marginBottom: 10 },
-  questionCounter: { fontSize: 16, color: '#6200EE', marginBottom: 20 },
+  noteDate: { fontSize: 12, color: '#666', marginBottom: 8 },
+  notePreview: { fontSize: 14, color: '#333', marginBottom: 15 },
+  questionCounter: { fontSize: 16, color: '#000', marginBottom: 20 },
   questionText: { 
     fontSize: 18, 
-    fontWeight: 'bold', 
-    textAlign: 'center', 
+    fontWeight: 'normal', 
+    textAlign: 'left', 
     marginBottom: 30,
-    color: '#333'
+    color: '#000'
   },
   selectedText: {
     fontSize: 16,
-    color: '#4CAF50',
-    fontWeight: 'bold',
+    color: '#000',
+    fontWeight: 'normal',
     marginTop: 15,
-    textAlign: 'center'
+    textAlign: 'left',
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+    borderWidth: 1,
+    borderColor: '#ddd'
   },
   nextButton: {
-    marginTop: 20,
-    backgroundColor: '#4CAF50'
+    marginTop: 20
   },
   scoreText: { 
     fontSize: 32, 
-    fontWeight: 'bold', 
-    color: '#4CAF50', 
+    fontWeight: 'normal', 
+    color: '#000', 
     marginBottom: 10 
   },
   percentageText: { 
     fontSize: 24, 
-    color: '#FF6B35', 
+    color: '#666', 
     marginBottom: 30 
   },
   emptyText: { 
     fontSize: 16, 
-    color: 'gray', 
+    color: '#666', 
     textAlign: 'center', 
     marginTop: 50 
   }

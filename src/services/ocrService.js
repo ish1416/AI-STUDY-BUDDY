@@ -1,6 +1,7 @@
 // OCR Service using Google Vision API
-const GOOGLE_VISION_API_KEY = '';
-const GOOGLE_VISION_URL = `https://vision.googleapis.com/v1/images:annotate?key=${GOOGLE_VISION_API_KEY}`;
+import { GOOGLE_VISION_API_KEY, GOOGLE_VISION_URL } from '@env';
+
+const VISION_API_URL = `${GOOGLE_VISION_URL}?key=${GOOGLE_VISION_API_KEY}`;
 
 export const extractTextFromImage = async (imageUri) => {
   try {
@@ -16,7 +17,7 @@ export const extractTextFromImage = async (imageUri) => {
     });
 
     // Call Google Vision API
-    const visionResponse = await fetch(GOOGLE_VISION_URL, {
+    const visionResponse = await fetch(VISION_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
