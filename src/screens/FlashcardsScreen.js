@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, Alert, Animated, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
+import { addPoints } from '../services/gamificationService';
 
 export default function FlashcardsScreen() {
   const [notes, setNotes] = useState([]);
@@ -91,7 +92,9 @@ export default function FlashcardsScreen() {
       setIsFlipped(false);
       flipAnimation.setValue(0);
     } else {
-      Alert.alert('Complete!', 'You have reviewed all flashcards!', [
+      // Add points for completing flashcards
+      await addPoints(15, 'Flashcards');
+      Alert.alert('Complete!', 'You have reviewed all flashcards! +15 points earned!', [
         { text: 'Study Again', onPress: () => setCurrentCard(0) },
         { text: 'Back to Notes', onPress: () => setStudyMode(false) }
       ]);

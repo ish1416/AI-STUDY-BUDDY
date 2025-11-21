@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
 import { summarizeText } from '../services/aiService';
 import { extractTextFromImage } from '../services/ocrService';
+import { addPoints } from '../services/gamificationService';
 
 export default function ScanScreen() {
   const [image, setImage] = useState(null);
@@ -139,7 +140,11 @@ export default function ScanScreen() {
       };
       notes.push(newNote);
       await AsyncStorage.setItem('notes', JSON.stringify(notes));
-      Alert.alert('Success', 'Note saved successfully!');
+      
+      // Add points for creating a note
+      await addPoints(10, 'Notes');
+      
+      Alert.alert('Success', 'Note saved successfully! +10 points earned!');
       setExtractedText('');
       setSummary('');
       setImage(null);

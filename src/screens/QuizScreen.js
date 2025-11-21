@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
 import { generateQuiz } from '../services/aiService';
+import { addPoints } from '../services/gamificationService';
 
 export default function QuizScreen() {
   const [notes, setNotes] = useState([]);
@@ -71,6 +72,8 @@ export default function QuizScreen() {
       setCurrentQuestion(currentQuestion + 1);
       setSelectedAnswer(null);
     } else {
+      // Add points for completing quiz
+      await addPoints(20, 'Quizzes');
       setShowResult(true);
     }
   };
