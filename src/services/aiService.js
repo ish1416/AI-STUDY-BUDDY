@@ -1,5 +1,5 @@
 const HUGGING_FACE_API_URL = 'https://api-inference.huggingface.co/models/facebook/bart-large-cnn';
-const API_KEY = 'hf_your_api_key_here'; // Replace with actual API key
+const API_KEY = 'hf_your_api_key_here'; // Replace with your actual API key
 
 export const summarizeText = async (text) => {
   try {
