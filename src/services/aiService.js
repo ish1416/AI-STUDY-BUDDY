@@ -1,4 +1,6 @@
-import { HUGGING_FACE_API_KEY, HUGGING_FACE_API_URL } from '@env';
+import { OPENAI_API_KEY } from '@env';
+
+const OPENAI_API_URL = 'https://api.openai.com/v1/chat/completions';
 
 export const summarizeText = async (text) => {
   try {
@@ -6,20 +8,27 @@ export const summarizeText = async (text) => {
       throw new Error('Text too short for summarization');
     }
 
-    console.log('Calling Hugging Face API...');
-    const response = await fetch(HUGGING_FACE_API_URL, {
+    console.log('Calling OpenAI API...');
+    const response = await fetch(OPENAI_API_URL, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${HUGGING_FACE_API_KEY}`,
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        inputs: text,
-        parameters: {
-          max_length: 150,
-          min_length: 30,
-          do_sample: false
-        }
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a helpful assistant that creates concise summaries of study material. Keep summaries under 150 words and focus on key concepts.'
+          },
+          {
+            role: 'user',
+            content: `Please summarize this text: ${text}`
+          }
+        ],
+        max_tokens: 200,
+        temperature: 0.3
       }),
     });
 
@@ -28,21 +37,14 @@ export const summarizeText = async (text) => {
     console.log('API Response:', result);
 
     if (!response.ok) {
-      throw new Error(`API Error: ${response.status} - ${result.error || 'Unknown error'}`);
+      throw new Error(`API Error: ${response.status} - ${result.error?.message || 'Unknown error'}`);
     }
     
     if (result.error) {
-      throw new Error(result.error);
+      throw new Error(result.error.message);
     }
 
-    // Handle different response formats
-    if (Array.isArray(result) && result[0]?.summary_text) {
-      return result[0].summary_text;
-    } else if (result.summary_text) {
-      return result.summary_text;
-    } else {
-      throw new Error('Invalid API response format');
-    }
+    return result.choices[0]?.message?.content || 'Summary not available';
   } catch (error) {
     console.error('Summarization error:', error);
     throw error;
@@ -55,71 +57,81 @@ export const generateQuiz = async (text) => {
       throw new Error('Text too short for quiz generation');
     }
 
-    console.log('Generating quiz from text...');
-    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 20);
-    const questions = [];
-    const usedWords = new Set();
-
-    // Generate different types of questions
-    for (let i = 0; i < Math.min(5, sentences.length); i++) {
-      const sentence = sentences[i].trim();
-      const words = sentence.split(' ').filter(w => w.length > 3);
-      
-      if (words.length > 3) {
-        // Find important words (nouns, verbs, adjectives)
-        const importantWords = words.filter(word => 
-          !['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'].includes(word.toLowerCase())
-        );
-        
-        if (importantWords.length > 0) {
-          const keyWord = importantWords[Math.floor(Math.random() * importantWords.length)];
-          
-          if (!usedWords.has(keyWord.toLowerCase())) {
-            usedWords.add(keyWord.toLowerCase());
-            
-            const questionText = sentence.replace(new RegExp(keyWord, 'gi'), '____');
-            const wrongOptions = generateWrongOptions(keyWord, text);
-            
-            const options = [keyWord, ...wrongOptions].sort(() => Math.random() - 0.5);
-            const correctIndex = options.indexOf(keyWord);
-            
-            questions.push({
-              id: i + 1,
-              question: `Fill in the blank: ${questionText}`,
-              options: options,
-              correct: correctIndex
-            });
+    console.log('Generating quiz with OpenAI...');
+    const response = await fetch(OPENAI_API_URL, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: 'You are a quiz generator. Create exactly 3-5 multiple choice questions based on the given text. Return ONLY a JSON array with this format: [{"id": 1, "question": "question text", "options": ["A", "B", "C", "D"], "correct": 0}]. The correct field should be the index (0-3) of the correct answer.'
+          },
+          {
+            role: 'user',
+            content: `Generate quiz questions from this text: ${text}`
           }
-        }
-      }
+        ],
+        max_tokens: 500,
+        temperature: 0.7
+      }),
+    });
+
+    const result = await response.json();
+    
+    if (!response.ok) {
+      throw new Error(`API Error: ${response.status}`);
     }
 
-    // Add some general comprehension questions
-    if (questions.length < 3) {
-      questions.push({
-        id: questions.length + 1,
-        question: 'What is the main topic discussed in this text?',
-        options: ['Science', 'History', 'Mathematics', 'Literature'],
-        correct: 0
-      });
+    const content = result.choices[0]?.message?.content;
+    if (!content) {
+      throw new Error('No quiz content generated');
     }
 
-    return questions.slice(0, 5); // Return max 5 questions
+    try {
+      const questions = JSON.parse(content);
+      return Array.isArray(questions) ? questions : [questions];
+    } catch (parseError) {
+      console.log('Failed to parse OpenAI response, using fallback');
+      return generateFallbackQuiz(text);
+    }
   } catch (error) {
     console.error('Quiz generation error:', error);
-    throw error;
+    return generateFallbackQuiz(text);
   }
 };
 
-const generateWrongOptions = (correctWord, fullText) => {
-  const words = fullText.split(/\s+/).filter(w => 
-    w.length > 3 && 
-    w.toLowerCase() !== correctWord.toLowerCase() &&
-    !['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'].includes(w.toLowerCase())
-  );
+const generateFallbackQuiz = (text) => {
+  const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 20);
+  const questions = [];
   
-  const uniqueWords = [...new Set(words.map(w => w.toLowerCase()))];
-  const shuffled = uniqueWords.sort(() => Math.random() - 0.5);
+  for (let i = 0; i < Math.min(3, sentences.length); i++) {
+    const sentence = sentences[i].trim();
+    const words = sentence.split(' ').filter(w => w.length > 4);
+    
+    if (words.length > 0) {
+      const keyWord = words[Math.floor(Math.random() * words.length)];
+      const questionText = sentence.replace(keyWord, '____');
+      
+      questions.push({
+        id: i + 1,
+        question: `Fill in the blank: ${questionText}`,
+        options: [keyWord, 'Option B', 'Option C', 'Option D'],
+        correct: 0
+      });
+    }
+  }
   
-  return shuffled.slice(0, 3).map(w => w.charAt(0).toUpperCase() + w.slice(1));
+  return questions.length > 0 ? questions : [
+    {
+      id: 1,
+      question: 'What is the main topic of this text?',
+      options: ['Topic A', 'Topic B', 'Topic C', 'Topic D'],
+      correct: 0
+    }
+  ];
 };
