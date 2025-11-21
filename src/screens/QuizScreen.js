@@ -105,7 +105,7 @@ export default function QuizScreen() {
   if (showResult) {
     return (
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>Quiz Complete! 🎉</Text>
+        <Text style={styles.title}>Quiz Complete!</Text>
         <Text style={styles.scoreText}>
           Your Score: {score}/{quiz.length}
         </Text>
@@ -113,8 +113,8 @@ export default function QuizScreen() {
           {Math.round((score / quiz.length) * 100)}%
         </Text>
         
-        <CustomButton title="🔄 Retake Quiz" onPress={restartQuiz} />
-        <CustomButton title="📝 Choose Another Note" onPress={goBackToNotes} />
+        <CustomButton title="Retake Quiz" onPress={restartQuiz} />
+        <CustomButton title="Choose Another Note" onPress={goBackToNotes} />
       </ScrollView>
     );
   }
@@ -171,7 +171,7 @@ export default function QuizScreen() {
               {note.text.substring(0, 100)}...
             </Text>
             <CustomButton
-              title="📝 Generate Quiz"
+              title="Generate Quiz"
               onPress={() => generateQuizFromNote(note)}
             />
           </View>

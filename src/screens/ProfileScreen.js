@@ -22,7 +22,7 @@ export default function ProfileScreen() {
       
       if (newAchievements.length > 0) {
         Alert.alert(
-          '🎉 New Achievement!',
+          'New Achievement!',
           newAchievements.map(a => `${a.title}: ${a.description}`).join('\n')
         );
       }
@@ -91,7 +91,7 @@ export default function ProfileScreen() {
       
       {gamificationData.achievements && gamificationData.achievements.length > 0 && (
         <View style={styles.achievementsContainer}>
-          <Text style={styles.sectionTitle}>🏆 Achievements</Text>
+          <Text style={styles.sectionTitle}>Achievements</Text>
           {gamificationData.achievements.map((achievement, index) => (
             <View key={index} style={styles.achievementCard}>
               <Text style={styles.achievementTitle}>{achievement.title}</Text>
@@ -102,7 +102,7 @@ export default function ProfileScreen() {
       )}
       
       <CustomButton 
-        title="🔄 Refresh Stats" 
+        title="Refresh Stats" 
         onPress={loadGamificationData}
         style={styles.refreshButton}
       />

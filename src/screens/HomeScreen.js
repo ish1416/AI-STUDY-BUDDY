@@ -31,20 +31,18 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Text style={styles.welcomeMessage}>👋 Welcome back! Ready to boost your learning?</Text>
+      <Text style={styles.welcomeMessage}>Welcome back! Ready to boost your learning?</Text>
       
       <View style={styles.featuresContainer}>
-        <Text style={styles.featuresTitle}>🚀 Your Learning Journey</Text>
+        <Text style={styles.featuresTitle}>Your Learning Journey</Text>
         
         <View style={styles.featureRow}>
           <View style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>📷</Text>
             <Text style={styles.featureTitle}>Scan</Text>
             <Text style={styles.featureDesc}>Capture notes</Text>
           </View>
           
           <View style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>📝</Text>
             <Text style={styles.featureTitle}>Notes</Text>
             <Text style={styles.featureDesc}>View & manage</Text>
           </View>
@@ -52,13 +50,11 @@ export default function HomeScreen() {
         
         <View style={styles.featureRow}>
           <View style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>🧠</Text>
             <Text style={styles.featureTitle}>Quiz</Text>
             <Text style={styles.featureDesc}>Test knowledge</Text>
           </View>
           
           <View style={styles.featureCard}>
-            <Text style={styles.featureEmoji}>🎴</Text>
             <Text style={styles.featureTitle}>Cards</Text>
             <Text style={styles.featureDesc}>Study & review</Text>
           </View>
@@ -66,27 +62,27 @@ export default function HomeScreen() {
       </View>
 
       <View style={styles.aboutContainer}>
-        <Text style={styles.aboutTitle}>🧠 About AI Study Buddy</Text>
+        <Text style={styles.aboutTitle}>About AI Study Buddy</Text>
         <Text style={styles.aboutText}>AI Study Buddy is your intelligent learning companion that transforms the way you study:</Text>
         
-        <Text style={styles.featureItem}>📸 <Text style={styles.featureBold}>Smart OCR:</Text> Scan handwritten or printed notes</Text>
-        <Text style={styles.featureItem}>🤖 <Text style={styles.featureBold}>AI Summaries:</Text> Get concise summaries of your notes</Text>
-        <Text style={styles.featureItem}>🧠 <Text style={styles.featureBold}>Auto Quizzes:</Text> Generate quizzes from your content</Text>
-        <Text style={styles.featureItem}>🎴 <Text style={styles.featureBold}>Flashcards:</Text> Interactive study cards with animations</Text>
-        <Text style={styles.featureItem}>🏆 <Text style={styles.featureBold}>Gamification:</Text> Earn points, maintain streaks, unlock achievements</Text>
+        <Text style={styles.featureItem}><Text style={styles.featureBold}>Smart OCR:</Text> Scan handwritten or printed notes</Text>
+        <Text style={styles.featureItem}><Text style={styles.featureBold}>AI Summaries:</Text> Get concise summaries of your notes</Text>
+        <Text style={styles.featureItem}><Text style={styles.featureBold}>Auto Quizzes:</Text> Generate quizzes from your content</Text>
+        <Text style={styles.featureItem}><Text style={styles.featureBold}>Flashcards:</Text> Interactive study cards with animations</Text>
+        <Text style={styles.featureItem}><Text style={styles.featureBold}>Gamification:</Text> Earn points, maintain streaks, unlock achievements</Text>
         
-        <Text style={styles.aboutFooter}>Study smarter, not harder! 🚀</Text>
+        <Text style={styles.aboutFooter}>Study smarter, not harder!</Text>
       </View>
       
       <View style={styles.instructionContainer}>
-        <Text style={styles.instructionTitle}>📱 How to Navigate</Text>
+        <Text style={styles.instructionTitle}>How to Navigate</Text>
         <Text style={styles.instructionText}>Use the bottom tabs to access different features:</Text>
-        <Text style={styles.instructionText}>• Home - Overview and stats</Text>
-        <Text style={styles.instructionText}>• Scan - Capture and process notes</Text>
-        <Text style={styles.instructionText}>• Notes - View saved notes</Text>
-        <Text style={styles.instructionText}>• Quiz - Test your knowledge</Text>
-        <Text style={styles.instructionText}>• Flashcards - Study with cards</Text>
-        <Text style={styles.instructionText}>• Profile - View progress and achievements</Text>
+        <Text style={styles.instructionText}>- Home: Overview and stats</Text>
+        <Text style={styles.instructionText}>- Scan: Capture and process notes</Text>
+        <Text style={styles.instructionText}>- Notes: View saved notes</Text>
+        <Text style={styles.instructionText}>- Quiz: Test your knowledge</Text>
+        <Text style={styles.instructionText}>- Flashcards: Study with cards</Text>
+        <Text style={styles.instructionText}>- Profile: View progress and achievements</Text>
       </View>
     </ScrollView>
   );
@@ -132,7 +128,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
   },
-  featureEmoji: { fontSize: 20, marginBottom: 8 },
+
   featureTitle: { fontSize: 14, fontWeight: 'normal', color: '#000', marginBottom: 4 },
   featureDesc: { fontSize: 12, color: '#666' },
   welcomeMessage: {

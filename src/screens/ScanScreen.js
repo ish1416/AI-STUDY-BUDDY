@@ -144,7 +144,7 @@ export default function ScanScreen() {
       // Add points for creating a note
       await addPoints(10, 'Notes');
       
-      Alert.alert('Success', 'Note saved successfully! +10 points earned!');
+      Alert.alert('Success', 'Note saved successfully! Points earned!');
       setExtractedText('');
       setSummary('');
       setImage(null);
@@ -159,8 +159,8 @@ export default function ScanScreen() {
 
       {!image && (
         <>
-          <CustomButton title="📷 Take Photo" onPress={takePhoto} />
-          <CustomButton title="🖼️ Select from Gallery" onPress={pickImage} />
+          <CustomButton title="Take Photo" onPress={takePhoto} />
+          <CustomButton title="Select from Gallery" onPress={pickImage} />
 
         </>
       )}
@@ -171,9 +171,9 @@ export default function ScanScreen() {
           
           {showImageOptions && (
             <>
-              <Text style={styles.imageStatus}>✅ Image selected</Text>
-              <CustomButton title="✅ Use This Image" onPress={processImage} />
-              <CustomButton title="🔄 Choose Another" onPress={chooseAnotherImage} />
+              <Text style={styles.imageStatus}>Image selected</Text>
+              <CustomButton title="Use This Image" onPress={processImage} />
+              <CustomButton title="Choose Another" onPress={chooseAnotherImage} />
             </>
           )}
         </>
@@ -188,7 +188,7 @@ export default function ScanScreen() {
 
       {extractedText && (
         <>
-          <Text style={styles.sectionTitle}>📝 Extracted Text:</Text>
+          <Text style={styles.sectionTitle}>Extracted Text:</Text>
           <TextInput
             style={styles.textInput}
             multiline
@@ -196,7 +196,7 @@ export default function ScanScreen() {
             onChangeText={setExtractedText}
             placeholder="Edit the extracted text here..."
           />
-          <CustomButton title="🤖 Generate Summary" onPress={generateSummary} />
+          <CustomButton title="Generate Summary" onPress={generateSummary} />
         </>
       )}
 
@@ -209,13 +209,13 @@ export default function ScanScreen() {
       
       {summary && (
         <>
-          <Text style={styles.sectionTitle}>✨ AI Summary:</Text>
+          <Text style={styles.sectionTitle}>AI Summary:</Text>
           <Text style={styles.summary}>{summary}</Text>
         </>
       )}
 
       {(extractedText || summary) && (
-        <CustomButton title="💾 Save Note" onPress={saveNote} />
+        <CustomButton title="Save Note" onPress={saveNote} />
       )}
     </ScrollView>
   );

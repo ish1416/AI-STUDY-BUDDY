@@ -94,7 +94,7 @@ export default function FlashcardsScreen() {
     } else {
       // Add points for completing flashcards
       await addPoints(15, 'Flashcards');
-      Alert.alert('Complete!', 'You have reviewed all flashcards! +15 points earned!', [
+      Alert.alert('Complete!', 'You have reviewed all flashcards! Points earned!', [
         { text: 'Study Again', onPress: () => setCurrentCard(0) },
         { text: 'Back to Notes', onPress: () => setStudyMode(false) }
       ]);
@@ -145,19 +145,19 @@ export default function FlashcardsScreen() {
 
         <View style={styles.navigationContainer}>
           <CustomButton 
-            title="← Previous" 
+            title="Previous" 
             onPress={previousCard}
             style={[styles.navButton, currentCard === 0 && styles.disabledButton]}
           />
           <CustomButton 
-            title="Next →" 
+            title="Next" 
             onPress={nextCard}
             style={styles.navButton}
           />
         </View>
 
         <CustomButton 
-          title="← Back to Notes" 
+          title="Back to Notes" 
           onPress={() => setStudyMode(false)}
           style={styles.backButton}
         />
@@ -178,7 +178,7 @@ export default function FlashcardsScreen() {
               {note.text.substring(0, 100)}...
             </Text>
             <CustomButton
-              title="🎴 Create Flashcards"
+              title="Create Flashcards"
               onPress={() => generateFlashcards(note)}
             />
           </View>
