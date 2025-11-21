@@ -31,31 +31,38 @@ export default function HomeScreen() {
         </View>
       </View>
 
+      <Text style={styles.welcomeMessage}>👋 Welcome back! Ready to boost your learning?</Text>
+      
       <View style={styles.featuresContainer}>
-        <Text style={styles.featuresTitle}>Quick Actions</Text>
+        <Text style={styles.featuresTitle}>🚀 Your Learning Journey</Text>
         
-        <Text style={styles.welcomeMessage}>👋 Welcome back! Ready to boost your learning?</Text>
+        <View style={styles.featureRow}>
+          <View style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>📷</Text>
+            <Text style={styles.featureTitle}>Scan</Text>
+            <Text style={styles.featureDesc}>Capture notes</Text>
+          </View>
+          
+          <View style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>📝</Text>
+            <Text style={styles.featureTitle}>Notes</Text>
+            <Text style={styles.featureDesc}>View & manage</Text>
+          </View>
+        </View>
         
-        <CustomButton 
-          title="📷 Scan Notes" 
-          onPress={() => console.log('Navigate to Scan - Use bottom tabs')}
-          style={styles.featureButton}
-        />
-        <CustomButton 
-          title="📝 View Notes" 
-          onPress={() => console.log('Navigate to Notes - Use bottom tabs')}
-          style={styles.featureButton}
-        />
-        <CustomButton 
-          title="🧠 Take Quiz" 
-          onPress={() => console.log('Navigate to Quiz - Use bottom tabs')}
-          style={styles.featureButton}
-        />
-        <CustomButton 
-          title="🎴 Study Flashcards" 
-          onPress={() => console.log('Navigate to Flashcards - Use bottom tabs')}
-          style={styles.featureButton}
-        />
+        <View style={styles.featureRow}>
+          <View style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>🧠</Text>
+            <Text style={styles.featureTitle}>Quiz</Text>
+            <Text style={styles.featureDesc}>Test knowledge</Text>
+          </View>
+          
+          <View style={styles.featureCard}>
+            <Text style={styles.featureEmoji}>🎴</Text>
+            <Text style={styles.featureTitle}>Cards</Text>
+            <Text style={styles.featureDesc}>Study & review</Text>
+          </View>
+        </View>
       </View>
 
       <View style={styles.aboutContainer}>
@@ -108,8 +115,22 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 30,
   },
-  featuresTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center' },
-  featureButton: { marginVertical: 5 },
+  featuresTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 15, textAlign: 'center', color: '#6200EE' },
+  featureRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+  },
+  featureCard: {
+    backgroundColor: '#F3E5F5',
+    padding: 15,
+    borderRadius: 12,
+    alignItems: 'center',
+    flex: 0.48,
+  },
+  featureEmoji: { fontSize: 24, marginBottom: 8 },
+  featureTitle: { fontSize: 16, fontWeight: 'bold', color: '#6200EE', marginBottom: 4 },
+  featureDesc: { fontSize: 12, color: 'gray', textAlign: 'center' },
   welcomeMessage: {
     fontSize: 16,
     color: '#4CAF50',
