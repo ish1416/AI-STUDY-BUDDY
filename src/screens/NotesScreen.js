@@ -36,6 +36,12 @@ export default function NotesScreen() {
     <View style={styles.noteCard}>
       <Text style={styles.date}>{item.date}</Text>
       <Text style={styles.text}>{item.text}</Text>
+      {item.summary && (
+        <>
+          <Text style={styles.summaryLabel}>Summary:</Text>
+          <Text style={styles.summaryText}>{item.summary}</Text>
+        </>
+      )}
     </View>
   );
 
@@ -70,4 +76,6 @@ const styles = StyleSheet.create({
   },
   date: { fontSize: 12, color: 'gray', marginBottom: 5 },
   text: { fontSize: 16, color: '#333' },
+  summaryLabel: { fontSize: 14, fontWeight: 'bold', color: '#FF6B35', marginTop: 10 },
+  summaryText: { fontSize: 14, color: '#FF6B35', fontStyle: 'italic', marginTop: 5, backgroundColor: '#FFF8F0', padding: 8, borderRadius: 5 },
 });
