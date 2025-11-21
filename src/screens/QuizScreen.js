@@ -131,13 +131,18 @@ export default function QuizScreen() {
           <CustomButton
             key={index}
             title={`${String.fromCharCode(65 + index)}. ${option}`}
-            onPress={() => selectAnswer(index)}
-            style={[
-              styles.optionButton,
-              selectedAnswer === index && styles.selectedOption
-            ]}
+            onPress={() => {
+              console.log('Selected answer:', index);
+              selectAnswer(index);
+            }}
           />
         ))}
+        
+        {selectedAnswer !== null && (
+          <Text style={styles.selectedText}>
+            Selected: {String.fromCharCode(65 + selectedAnswer)}. {question.options[selectedAnswer]}
+          </Text>
+        )}
         
         <CustomButton 
           title={currentQuestion + 1 === quiz.length ? "Finish Quiz" : "Next Question"}
@@ -200,15 +205,12 @@ const styles = StyleSheet.create({
     marginBottom: 30,
     color: '#333'
   },
-  optionButton: { 
-    marginVertical: 5,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 2,
-    borderColor: 'transparent'
-  },
-  selectedOption: {
-    backgroundColor: '#E3F2FD',
-    borderColor: '#6200EE'
+  selectedText: {
+    fontSize: 16,
+    color: '#4CAF50',
+    fontWeight: 'bold',
+    marginTop: 15,
+    textAlign: 'center'
   },
   nextButton: {
     marginTop: 20,

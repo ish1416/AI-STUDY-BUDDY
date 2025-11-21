@@ -6,6 +6,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import ScanScreen from './src/screens/ScanScreen';
 import NotesScreen from './src/screens/NotesScreen';
 import QuizScreen from './src/screens/QuizScreen';
+import FlashcardsScreen from './src/screens/FlashcardsScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -28,6 +29,8 @@ export default function App() {
               iconName = focused ? 'document-text' : 'document-text-outline';
             } else if (route.name === 'Quiz') {
               iconName = focused ? 'help-circle' : 'help-circle-outline';
+            } else if (route.name === 'Flashcards') {
+              iconName = focused ? 'albums' : 'albums-outline';
             } else if (route.name === 'Profile') {
               iconName = focused ? 'person' : 'person-outline';
             }
@@ -42,6 +45,7 @@ export default function App() {
         <Tab.Screen name="Scan" component={ScanScreen} />
         <Tab.Screen name="Notes" component={NotesScreen} />
         <Tab.Screen name="Quiz" component={QuizScreen} />
+        <Tab.Screen name="Flashcards" component={FlashcardsScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>
