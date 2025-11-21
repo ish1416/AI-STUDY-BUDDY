@@ -5,28 +5,25 @@ export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>AI Study Buddy</Text>
-        <Text style={styles.subtitle}>Your intelligent learning companion</Text>
+        <Text style={styles.projectName}>AI Study Buddy</Text>
+        <Text style={styles.title}>Smart Learning Assistant</Text>
+        <Text style={styles.subtitle}>Transform your study sessions with AI</Text>
       </View>
 
       <View style={styles.content}>
         <Text style={styles.description}>
-          Transform your study sessions with AI-powered tools that help you learn faster and retain more.
+          Digitize notes, generate summaries, create quizzes, and track your progress with our intelligent study tools.
         </Text>
-        
-        <View style={styles.featureList}>
-          <Text style={styles.feature}>• Scan and digitize handwritten notes</Text>
-          <Text style={styles.feature}>• Generate AI summaries automatically</Text>
-          <Text style={styles.feature}>• Create quizzes from your content</Text>
-          <Text style={styles.feature}>• Study with interactive flashcards</Text>
-          <Text style={styles.feature}>• Track progress with gamification</Text>
-        </View>
       </View>
 
       <View style={styles.footer}>
         <CustomButton 
           title="Get Started" 
           onPress={() => navigation.navigate('MainApp')}
+        />
+        <CustomButton 
+          title="Learn More" 
+          onPress={() => navigation.navigate('InfoScreen')}
         />
       </View>
     </View>
@@ -42,12 +39,18 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginTop: 60,
+    marginTop: 80,
   },
-  title: {
-    fontSize: 32,
+  projectName: {
+    fontSize: 28,
     fontWeight: 'normal',
     color: '#000',
+    marginBottom: 15,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'normal',
+    color: '#333',
     marginBottom: 10,
   },
   subtitle: {
@@ -58,28 +61,15 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     justifyContent: 'center',
+    paddingHorizontal: 20,
   },
   description: {
     fontSize: 18,
     color: '#333',
     textAlign: 'center',
-    marginBottom: 40,
-    lineHeight: 24,
-  },
-  featureList: {
-    backgroundColor: '#f9f9f9',
-    padding: 25,
-    borderRadius: 0,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  feature: {
-    fontSize: 16,
-    color: '#555',
-    marginBottom: 12,
-    lineHeight: 22,
+    lineHeight: 26,
   },
   footer: {
-    marginBottom: 30,
+    marginBottom: 40,
   },
 });
