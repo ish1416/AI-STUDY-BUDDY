@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, Image, ScrollView, ActivityIndicator, Alert, TextInput } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+
+// Debug: Check what's available in ImagePicker
+console.log('ImagePicker MediaType:', ImagePicker.MediaType);
+console.log('ImagePicker MediaTypeOptions:', ImagePicker.MediaTypeOptions);
+console.log('Available ImagePicker properties:', Object.keys(ImagePicker));
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomButton from '../components/CustomButton';
 import { summarizeText } from '../services/aiService';
@@ -24,7 +29,6 @@ export default function ScanScreen() {
 
       console.log('Launching image library...');
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaType.Images,
         allowsEditing: false,
         quality: 0.8,
       });
@@ -54,7 +58,6 @@ export default function ScanScreen() {
 
       console.log('Launching camera...');
       let result = await ImagePicker.launchCameraAsync({
-        mediaTypes: ImagePicker.MediaType.Images,
         allowsEditing: false,
         quality: 0.8,
       });
