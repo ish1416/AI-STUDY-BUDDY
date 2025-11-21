@@ -86,7 +86,7 @@ export default function FlashcardsScreen() {
     setIsFlipped(!isFlipped);
   };
 
-  const nextCard = () => {
+  const nextCard = async () => {
     if (currentCard < flashcards.length - 1) {
       setCurrentCard(currentCard + 1);
       setIsFlipped(false);

@@ -159,14 +159,8 @@ export default function ScanScreen() {
 
       {!image && (
         <>
-          <CustomButton title="📷 Take Photo" onPress={() => {
-            console.log('Take Photo button pressed');
-            takePhoto();
-          }} />
-          <CustomButton title="🖼️ Select from Gallery" onPress={() => {
-            console.log('Select Gallery button pressed');
-            pickImage();
-          }} />
+          <CustomButton title="📷 Take Photo" onPress={takePhoto} />
+          <CustomButton title="🖼️ Select from Gallery" onPress={pickImage} />
 
         </>
       )}
