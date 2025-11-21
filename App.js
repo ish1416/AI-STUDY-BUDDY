@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 import HomeScreen from './src/screens/HomeScreen';
 import ScanScreen from './src/screens/ScanScreen';
 import NotesScreen from './src/screens/NotesScreen';
-import FlashcardsScreen from './src/screens/FlashcardsScreen';
+import QuizScreen from './src/screens/QuizScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
@@ -26,8 +26,8 @@ export default function App() {
               iconName = focused ? 'camera' : 'camera-outline';
             } else if (route.name === 'Notes') {
               iconName = focused ? 'document-text' : 'document-text-outline';
-            } else if (route.name === 'Flashcards') {
-              iconName = focused ? 'albums' : 'albums-outline';
+            } else if (route.name === 'Quiz') {
+              iconName = focused ? 'help-circle' : 'help-circle-outline';
             } else if (route.name === 'Profile') {
               iconName = focused ? 'person' : 'person-outline';
             }
@@ -41,7 +41,7 @@ export default function App() {
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Scan" component={ScanScreen} />
         <Tab.Screen name="Notes" component={NotesScreen} />
-        <Tab.Screen name="Flashcards" component={FlashcardsScreen} />
+        <Tab.Screen name="Quiz" component={QuizScreen} />
         <Tab.Screen name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
     </NavigationContainer>

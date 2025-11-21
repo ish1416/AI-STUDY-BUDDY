@@ -45,6 +45,7 @@ export const extractTextFromImage = async (imageUri) => {
       console.log('OCR extraction successful');
       return extractedText;
     } else {
+      console.log('API Response:', result);
       throw new Error('No text found in image');
     }
   } catch (error) {
@@ -60,7 +61,7 @@ const simulateTextExtraction = async (imageUri) => {
   console.log('Using fallback text simulation...');
   
   // Simulate processing time
-  await new Promise(resolve => setTimeout(resolve, 2000));
+  await new Promise(resolve => setTimeout(resolve, 1000));
   
   // Generate more realistic sample text based on common study materials
   const sampleTexts = [

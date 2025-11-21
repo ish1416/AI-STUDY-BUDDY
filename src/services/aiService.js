@@ -56,37 +56,71 @@ export const generateQuiz = async (text) => {
       throw new Error('Text too short for quiz generation');
     }
 
-    // Simple quiz generation logic for now
-    const sentences = text.split('.').filter(s => s.trim().length > 20);
+    console.log('Generating quiz from text...');
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 20);
     const questions = [];
+    const usedWords = new Set();
 
-    for (let i = 0; i < Math.min(3, sentences.length); i++) {
+    // Generate different types of questions
+    for (let i = 0; i < Math.min(5, sentences.length); i++) {
       const sentence = sentences[i].trim();
-      const words = sentence.split(' ');
+      const words = sentence.split(' ').filter(w => w.length > 3);
       
-      if (words.length > 5) {
-        const keyWord = words[Math.floor(words.length / 2)];
-        const question = sentence.replace(keyWord, '____');
+      if (words.length > 3) {
+        // Find important words (nouns, verbs, adjectives)
+        const importantWords = words.filter(word => 
+          !['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'].includes(word.toLowerCase())
+        );
         
-        questions.push({
-          id: i + 1,
-          question: question + '?',
-          options: [keyWord, 'Option B', 'Option C', 'Option D'],
-          correct: 0
-        });
+        if (importantWords.length > 0) {
+          const keyWord = importantWords[Math.floor(Math.random() * importantWords.length)];
+          
+          if (!usedWords.has(keyWord.toLowerCase())) {
+            usedWords.add(keyWord.toLowerCase());
+            
+            const questionText = sentence.replace(new RegExp(keyWord, 'gi'), '____');
+            const wrongOptions = generateWrongOptions(keyWord, text);
+            
+            const options = [keyWord, ...wrongOptions].sort(() => Math.random() - 0.5);
+            const correctIndex = options.indexOf(keyWord);
+            
+            questions.push({
+              id: i + 1,
+              question: `Fill in the blank: ${questionText}`,
+              options: options,
+              correct: correctIndex
+            });
+          }
+        }
       }
     }
 
-    return questions.length > 0 ? questions : [
-      {
-        id: 1,
-        question: 'What is the main topic of this text?',
-        options: ['Topic A', 'Topic B', 'Topic C', 'Topic D'],
+    // Add some general comprehension questions
+    if (questions.length < 3) {
+      questions.push({
+        id: questions.length + 1,
+        question: 'What is the main topic discussed in this text?',
+        options: ['Science', 'History', 'Mathematics', 'Literature'],
         correct: 0
-      }
-    ];
+      });
+    }
+
+    return questions.slice(0, 5); // Return max 5 questions
   } catch (error) {
     console.error('Quiz generation error:', error);
     throw error;
   }
+};
+
+const generateWrongOptions = (correctWord, fullText) => {
+  const words = fullText.split(/\s+/).filter(w => 
+    w.length > 3 && 
+    w.toLowerCase() !== correctWord.toLowerCase() &&
+    !['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'].includes(w.toLowerCase())
+  );
+  
+  const uniqueWords = [...new Set(words.map(w => w.toLowerCase()))];
+  const shuffled = uniqueWords.sort(() => Math.random() - 0.5);
+  
+  return shuffled.slice(0, 3).map(w => w.charAt(0).toUpperCase() + w.slice(1));
 };
