@@ -56,7 +56,7 @@ export default function QuizScreen() {
     setSelectedAnswer(answerIndex);
   };
 
-  const nextQuestion = () => {
+  const nextQuestion = async () => {
     if (selectedAnswer === null) {
       Alert.alert('Please select an answer', 'Choose an option before proceeding.');
       return;
