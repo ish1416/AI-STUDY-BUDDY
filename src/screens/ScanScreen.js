@@ -14,38 +14,62 @@ export default function ScanScreen() {
   const [showImageOptions, setShowImageOptions] = useState(false);
 
   const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaType.Images,
-      allowsEditing: false,
-      quality: 0.8,
-    });
+    try {
+      console.log('Requesting gallery permissions...');
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'Gallery permission is required');
+        return;
+      }
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      setShowImageOptions(true);
-      setExtractedText('');
-      setSummary('');
+      console.log('Launching image library...');
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaType.Images,
+        allowsEditing: false,
+        quality: 0.8,
+      });
+
+      console.log('Image picker result:', result);
+      if (!result.canceled && result.assets && result.assets[0]) {
+        setImage(result.assets[0].uri);
+        setShowImageOptions(true);
+        setExtractedText('');
+        setSummary('');
+        console.log('Image selected successfully');
+      }
+    } catch (error) {
+      console.error('Error picking image:', error);
+      Alert.alert('Error', 'Failed to select image');
     }
   };
 
   const takePhoto = async () => {
-    const { status } = await ImagePicker.requestCameraPermissionsAsync();
-    if (status !== 'granted') {
-      Alert.alert('Permission needed', 'Camera permission is required');
-      return;
-    }
+    try {
+      console.log('Requesting camera permissions...');
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== 'granted') {
+        Alert.alert('Permission needed', 'Camera permission is required');
+        return;
+      }
 
-    let result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaType.Images,
-      allowsEditing: false,
-      quality: 0.8,
-    });
+      console.log('Launching camera...');
+      let result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ImagePicker.MediaType.Images,
+        allowsEditing: false,
+        quality: 0.8,
+      });
 
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
-      setShowImageOptions(true);
-      setExtractedText('');
-      setSummary('');
+      console.log('Camera result:', result);
+      if (!result.canceled && result.assets && result.assets[0]) {
+        setImage(result.assets[0].uri);
+        setShowImageOptions(true);
+        setExtractedText('');
+        setSummary('');
+        console.log('Photo taken successfully');
+      }
+    } catch (error) {
+      console.error('Error taking photo:', error);
+      Alert.alert('Error', 'Failed to take photo');
     }
   };
 
@@ -126,8 +150,15 @@ export default function ScanScreen() {
 
       {!image && (
         <>
-          <CustomButton title="📷 Take Photo" onPress={takePhoto} />
-          <CustomButton title="🖼️ Select from Gallery" onPress={pickImage} />
+          <CustomButton title="📷 Take Photo" onPress={() => {
+            console.log('Take Photo button pressed');
+            takePhoto();
+          }} />
+          <CustomButton title="🖼️ Select from Gallery" onPress={() => {
+            console.log('Select Gallery button pressed');
+            pickImage();
+          }} />
+          <CustomButton title="🧪 Test Button" onPress={() => Alert.alert('Test', 'Button works!')} />
         </>
       )}
 
